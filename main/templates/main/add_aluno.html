@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+<!-- {% load crispy_forms_tags %} -->
+
+
+{% block nome %}Adicione um aluno{% endblock %}
+
+{% block content %}
+<div>
+    <h1>Informações do aluno:</h1>
+    <form method="POST">
+        {% csrf_token %}
+        
+        <div class="input-group mb-3">
+            <div class="input-group-prepend"><span class="input-group-text">Nome</span></div>
+            {% render_field form.nome class+="form-control" %}
+        </div>
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend"><span class="input-group-text">Descrição</span></div>
+            {% render_field form.description class+="form-control" %}
+        </div>
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend" ><span class="input-group-text">Telefone</span></div>
+            {% render_field form.telefone  class+="form-control" %}
+        </div>
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend"><span class="input-group-text">Email</span></div>
+            {% render_field form.email class+="form-control"  %}
+        </div>
+
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend"><span class="input-group-text">Data de nascimento</span></div>
+            {% render_field form.data_nascimento class+="form-control" %}
+        </div>
+
+        <!-- o codigo acima também pode ser representado assim:
+            {% for field in form.visible_fields %}
+                <div class="form-group">
+                    <label for="{{field.id_for_label}}">{{field.label}}</label>
+                    {{field|add_class:'form-control'}}
+                </div>
+            {% endfor %}
+        -->
+
+        <input type="submit" class="btn btn-success" value="Salvar">
+    </form>
+</div>
+
+
+<script>
+    function cadastrar() {
+        var verifica = document.getElementById( 'telefone', 'nome').value
+        let e = document.getElementById('email').value;
+        let result = e.includes('@');
+        if (verifica == '' || result == false) {
+            alert('Preencha todos os campos')
+        } else {
+            alert("Cadastrado com successo")
+        }
+    }
+    const handlePhone = (event) => {
+        let input = event.target
+        input.value = phoneMask(input.value)
+    }
+
+    const phoneMask = (value) => {
+        if (!value) return ""
+        value = value.replace(/\D/g, '')
+        value = value.replace(/(\d{2})(\d)/, "($1) $2")
+        value = value.replace(/(\d)(\d{4})$/, "$1-$2")
+        return value
+    }
+</script>
+
+{% endblock %} 

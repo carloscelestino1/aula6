@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<div class>
+    <h1>Editando: {{aluno.nome}}</h1>
+    <form method="POST">
+        {% csrf_token %}
+        
+        {{ form|crispy }}
+
+        <input type="submit" class="btn btn-success" value="Editar aluno">
+    </form>
+</div>
+
+<script>
+    function cadastrar() {
+        var verifica = document.getElementById( 'telefone', 'nome').value
+        let e = document.getElementById('email').value;
+        let result = e.includes('@');
+        if (verifica == '' || result == false) {
+            alert('Preencha todos os campos')
+        } else {
+            alert("Cadastrado com successo")
+        }
+    }
+    const handlePhone = (event) => {
+        let input = event.target
+        input.value = phoneMask(input.value)
+    }
+
+    const phoneMask = (value) => {
+        if (!value) return ""
+        value = value.replace(/\D/g, '')
+        value = value.replace(/(\d{2})(\d)/, "($1) $2")
+        value = value.replace(/(\d)(\d{4})$/, "$1-$2")
+        return value
+    }
+</script>
+{% endblock %}

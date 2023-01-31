@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+<!-- O codigo acima garante a importação no nosso arquivo base.html -->
+
+{% block title %}Lista de Alunos{% endblock %}
+
+{% block content %}
+
+<a id="add-link" href="newaluno/">
+  <div class="col-2 add-div">
+      <i class="fas fa-plus"></i> Adicionar Aluno
+  </div>
+</a>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Aluno</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for aluno in alunos %}      
+        <tr>
+            <td><span><a href="/aluno/{{aluno.id}}">{{aluno.nome}}</a></span></td>
+            <td><a href="edit/{{aluno.id}}"><span><i class="fas fa-edit"></i></span></td>  <!--<span><i class="fas fa-edit"></i></span> -->
+            <td><a href="delete/{{aluno.id}}" class="delete-btn"><span><i class="fas fa-trash"></i></span></td> <!-- <span><i class="fas fa-trash"></i></span> -->
+        </tr>            
+    {% endfor %}
+
+  </tbody>
+</table>
+{% endblock %}
